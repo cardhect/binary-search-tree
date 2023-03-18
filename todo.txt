@@ -1,0 +1,3 @@
+//TODO Complete steps 4-11 on TOP binary search tree project.
+
+//remove duplicates before creating tree.

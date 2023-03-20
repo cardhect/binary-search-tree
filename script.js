@@ -97,6 +97,20 @@ class Tree {
 
 		return root;
 	}
+
+	find(value, root = this.root) {
+		if (value == root.data) {
+			console.log(root);
+			return root;
+		}
+		if (value < root.data) {
+			root = this.find(value,root.left)
+		}
+		if (value > root.data) {
+			root = this.find(value,root.right)
+		}
+		return root;
+	}
 }
 
 function mergeSort(array) {
@@ -152,8 +166,9 @@ let arrOne = [4, 1, 6, 5, 7, 8, 2, 3, 10, 12];
 
 const treeOne = new Tree(arrOne);
 treeOne.delete(8);
-// treeOne.delete(2);
-// treeOne.delete(1);
+treeOne.insert(9);
+treeOne.delete(10);
+treeOne.find(3);
 prettyPrint(treeOne.root);
 
 // console.log(treeOne.root);

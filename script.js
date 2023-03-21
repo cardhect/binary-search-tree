@@ -111,6 +111,102 @@ class Tree {
 		}
 		return root;
 	}
+//Iteration Level Order Func
+	levelOrder( func) {
+		let root = this.root
+		let queue = []
+		queue.push(root);
+		// let values = [];
+
+		while (queue.length > 0) {
+			if (queue[0].left != null) {
+				queue.push(queue[0].left);
+			}
+			if (queue[0].right != null) {
+				queue.push(queue[0].right);
+			}
+
+			func(queue[0])
+
+			queue.shift();
+		}
+	}
+//Recursive Level Order func	
+	RecursivelevelOrder(func, root = this.root, queue = [null]) {
+		
+		//If no function is given
+		if(func == undefined) {
+			this.RecursivelevelOrder(printValue,root,queue)
+		}
+
+		if (queue.length == 0) {
+			return;
+		}
+
+		if (queue[0] == null) {
+			
+			queue.shift();
+			queue.push(root);
+		}
+		
+		if (queue[0].left != null) {
+			queue.push(queue[0].left);
+		}
+		if (queue[0].right != null) {
+			queue.push(queue[0].right);
+		}
+
+		func(queue[0])
+
+		queue.shift();
+
+		this.RecursivelevelOrder(func,root = queue[0], queue = queue);
+		
+	}
+	
+	//Inorder traveses from smallest node to biggest. Left to right of tree
+	inOrder(func, root = this.root, queue = [null]){
+		
+		//If no function is given
+		if(func == undefined) {
+			//TODO Change this to return values in a inOrder form.
+			this.RecursivelevelOrder(printValue,root,queue)
+		}
+	
+		if (queue.length == 0) {
+			return;
+		}
+	
+		if (queue[0] == null) {
+			
+			queue.shift();
+			queue.push(root);
+		}
+
+		if (queue[queue.length-1].left != null) {
+			queue.push(queue[queue.length-1].left)
+			this.inOrder(func,root = queue[queue.length-1].left, queue = queue);
+			
+			if (root == null) {
+				return
+			}
+
+			console.log('this is the smallest node');
+			console.log(queue[queue.length-1]);
+
+		}
+		
+	}
+	//Preorder traveses in root -> left tree -> right tree
+	preOrder(){
+
+	}
+
+	//Postorder traverses starting from bottom level of left tree to top of left tree -> bottom level right tree to top of right tree, then ending with root node.
+	postOrder(){
+
+	}
+
 }
 
 function mergeSort(array) {
@@ -158,6 +254,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 	}
 };
 
+function printValue(node) {
+	console.log(node.data);
+}
+
 //Testing
 // let sortedBB = mergeSort([3, 1, 4, 9, 0, 5, 9, 5, 6, 1, 1, 1, 0, 0, 6]);
 // console.log(sortedBB);
@@ -165,10 +265,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let arrOne = [4, 1, 6, 5, 7, 8, 2, 3, 10, 12];
 
 const treeOne = new Tree(arrOne);
-treeOne.delete(8);
-treeOne.insert(9);
-treeOne.delete(10);
-treeOne.find(3);
+// treeOne.delete(8);
+// treeOne.insert(9);
+// treeOne.delete(10);
+// treeOne.find(3);
+// treeOne.levelOrder(printValue);
+// treeOne.RecursivelevelOrder();
+treeOne.inOrder(printValue);
 prettyPrint(treeOne.root);
 
 // console.log(treeOne.root);

@@ -167,22 +167,21 @@ class Tree {
 	//Inorder traveses from smallest node to biggest. Left to right of tree
 	inOrder(func, root = this.root, queue = [null]){
 		
-		//If no function is given
 		if(func == undefined) {
 			//TODO Change this to return values in a inOrder form.
 			this.RecursivelevelOrder(printValue,root,queue)
 		}
-	
+		
 		if (queue.length == 0) {
 			return;
 		}
-	
+		
 		if (queue[0] == null) {
 			
 			queue.shift();
 			queue.push(root);
 		}
-
+		
 		if (queue[queue.length-1].left != null) {
 			queue.push(queue[queue.length-1].left)
 			this.inOrder(func,root = queue[queue.length-1].left, queue = queue);
@@ -190,21 +189,52 @@ class Tree {
 			if (root == null) {
 				return
 			}
-
+			
 			console.log('this is the smallest node');
 			console.log(queue[queue.length-1]);
-
+			
 		}
 		
 	}
 	//Preorder traveses in root -> left tree -> right tree
-	preOrder(){
+	preOrder(func, root = this.root, queue = [null]){
+		if (root == null) {
+			//TODO Change this to return array of values in pre order.
+			this.RecursivelevelOrder(printValue,root,queue)
+		}
+		func(root);
+		
+		if (root.left != null) {
+			this.preOrder(func, root.left, queue = [1])		
+			
+		}
+		if (root.right != null) {
+			this.preOrder(func, root.right, queue = [1])
+		}
+		
+		if ((root.left && root.right) == null) {
+			return;
+		}
 
 	}
 
 	//Postorder traverses starting from bottom level of left tree to top of left tree -> bottom level right tree to top of right tree, then ending with root node.
-	postOrder(){
-
+	postOrder(func, root = this.root){
+		if (func == undefined) {
+			//TODO print array of vals in post order.
+			console.log('print values in post order')
+		}
+		if(root.left != null) {
+			this.postOrder(func, root.left);
+		}
+		if(root.right != null) {
+			this.postOrder(func, root.right);
+		}
+		if (root.left == null && root.right == null) {
+			func(root);
+			return;
+		}
+		func(root);
 	}
 
 }
@@ -271,7 +301,9 @@ const treeOne = new Tree(arrOne);
 // treeOne.find(3);
 // treeOne.levelOrder(printValue);
 // treeOne.RecursivelevelOrder();
-treeOne.inOrder(printValue);
+// treeOne.inOrder(printValue);
+// treeOne.preOrder(printValue);
+treeOne.postOrder(printValue);
 prettyPrint(treeOne.root);
 
 // console.log(treeOne.root);
